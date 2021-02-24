@@ -20,11 +20,14 @@ namespace MovieDatabase.Controllers
             return Ok();
         }
 
-        [HttpGet("metadata/{id}")]
+        [HttpGet("metadata/{id}")]                                              
         public IActionResult GetMetadata(ulong id)
         {
-            var movie = _metadataRepository.Movies.FirstOrDefault(f => f.MovieId == id);
-            return movie != null ? (IActionResult)Ok(movie) : NotFound();
+            // We are interested in the count, 
+            var movie = _metadataRepository.GetByMovieId(id).ToArray();
+
+            // Return movie 404 when not found.. 
+            return movie.Length > 0 ? (IActionResult)Ok(movie) : NotFound();
         }
     }
 }
