@@ -96,5 +96,22 @@ namespace MovieDatabase.Tests
         // TODO: Test Metadata Controller get
 
         // TODO: Test Metadata controller post.
+        [Test]
+        public void LoadCSVRow_LoadsRowToRepo()
+        {
+            // Arrange
+            const string csv = "1,3,Elysium,AR,01:49:00,2013";
+
+            // Act
+            var itemUnderTest = MetadataItem.FromCSV(csv);
+
+            // Assert
+            Assert.AreEqual(itemUnderTest.Id, 1);
+            Assert.AreEqual(itemUnderTest.MovieId, 3);
+            Assert.AreEqual(itemUnderTest.Title, "Elysium");
+            Assert.AreEqual(itemUnderTest.Language, "AR");
+            Assert.AreEqual(TimeSpan.Parse("01:49:00"), itemUnderTest.Duration);
+            Assert.AreEqual(itemUnderTest.ReleaseYear, 2013);
+        }
     }
 }
