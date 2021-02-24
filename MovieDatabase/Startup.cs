@@ -26,7 +26,11 @@ namespace MovieDatabase
         {
             services.AddControllers().AddJsonOptions(f => f.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase);
 
-            services.AddSingleton<MetadataRepository>();
+            services.AddSingleton<MetadataRepository>(f => {
+                var repository = new MetadataRepository();
+                repository.LoadCSV();
+                return repository;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

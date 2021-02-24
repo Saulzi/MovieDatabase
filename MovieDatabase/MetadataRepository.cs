@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace MovieDatabase
 {
@@ -30,6 +31,17 @@ namespace MovieDatabase
 
             // Then we want to order by the language
             return groupedByLang.OrderBy(f => f.Language);
+
+        }
+
+        public void LoadCSV()
+        {
+            // our example CSV has row which needs to be skipped
+            foreach (var row in File.ReadAllLines("metadata.csv").Skip(1))
+            {
+                Movies.Add(MetadataItem.FromCSV(row));
+            }
+
 
         }
 
